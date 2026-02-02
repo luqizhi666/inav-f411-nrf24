@@ -84,9 +84,9 @@
 #define UART2_TX_PIN            PA2
 #define UART2_RX_PIN            PA3
 
-#define USE_UART3               // 蓝牙/数传（备用）
-#define UART3_TX_PIN            PB10
-#define UART3_RX_PIN            PB11
+// #define USE_UART3               // 蓝牙/数传（备用）
+// #define UART3_TX_PIN            PB10
+// #define UART3_RX_PIN            PB11
 
 #define USE_SOFTSERIAL1
 #define SOFTSERIAL_1_TX_PIN     PB3 // ST1 pad
@@ -96,7 +96,7 @@
 // #define SOFTSERIAL_2_RX_PIN     PA8
 
 
-#define SERIAL_PORT_COUNT       5
+#define SERIAL_PORT_COUNT       4
 
 
 // #define DEFAULT_RX_TYPE         RX_TYPE_SERIAL
