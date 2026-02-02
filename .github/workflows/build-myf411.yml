@@ -1,0 +1,63 @@
+name: Build and Release MyF411
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake make gcc-arm-none-eabi binutils-arm-none-eabi build-essential
+
+      - name: Configure (cmake)
+        run: |
+          mkdir -p build
+          cd build
+          cmake ..
+
+      - name: Build MyF411
+        run: |
+          cd build
+          make MyF411 -j$(nproc)
+
+      - name: Find generated .hex and extract version
+        id: find_hex
+        run: |
+          set -euo pipefail
+          echo "Listing build/ for debugging"
+          ls -lah build || true
+          HEX_PATH=$(ls build/*.hex 2>/dev/null | grep MyF411 || true)
+          if [ -z "${HEX_PATH}" ]; then
+            echo "No .hex file matching '*MyF411' found in build/"
+            exit 1
+          fi
+          HEX_PATH=$(echo "$HEX_PATH" | head -n1)
+          HEX_FILE=$(basename "$HEX_PATH")
+          # Try to extract version from filename like inav_9.0.0_MyF411.hex
+          VERSION=$(echo "$HEX_FILE" | sed -n 's/^inav_\([0-9]\+\.[0-9]\+\.[0-9]\+\)_.*\.hex$/\1/p') || true
+          if [ -z "$VERSION" ]; then
+            VERSION="build-${{ github.run_number }}"
+          fi
+          echo "hex_file=$HEX_PATH" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Create/Update GitHub Release and upload .hex
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.find_hex.outputs.version }}
+          name: "Release ${{ steps.find_hex.outputs.version }} (MyF411)"
+          files: ${{ steps.find_hex.outputs.hex_file }}
+          allowUpdates: true
+          draft: false
+          prerelease: false
