@@ -1,8 +1,8 @@
 #pragma once
 
-#define TARGET_BOARD_IDENTIFIER "ST41"
+#define TARGET_BOARD_IDENTIFIER "weact-F411"
 
-#define USBD_PRODUCT_STRING  "STM32F411CE"
+#define USBD_PRODUCT_STRING  "weact-F411"
 
 #define LED0                    PC13
 //#define LED1                    PC14
