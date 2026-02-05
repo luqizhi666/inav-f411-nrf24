@@ -1,4 +1,4 @@
-name: Build and Release weact-F411
+name: Build and Release weact_F411
 
 on:
   push:
@@ -26,10 +26,10 @@ jobs:
           cd build
           cmake ..
 
-      - name: Build weact-F411
+      - name: Build weact_F411
         run: |
           cd build
-          make weact-F411 -j$(nproc)
+          make weact_F411 -j$(nproc)
 
       - name: Find generated .hex and extract version
         id: find_hex
@@ -37,9 +37,9 @@ jobs:
           set -euo pipefail
           echo "Listing build/ for debugging"
           ls -lah build || true
-          HEX_PATH=$(ls build/*.hex 2>/dev/null | grep weact-F411 || true)
+          HEX_PATH=$(ls build/*.hex 2>/dev/null | grep weact_F411 || true)
           if [ -z "${HEX_PATH}" ]; then
-            echo "No .hex file matching '*weact-F411' found in build/"
+            echo "No .hex file matching '*weact_F411' found in build/"
             exit 1
           fi
           HEX_PATH=$(echo "$HEX_PATH" | head -n1)
@@ -55,7 +55,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.find_hex.outputs.version }}
-          name: "Release ${{ steps.find_hex.outputs.version }} (weact-F411)"
+          name: "Release ${{ steps.find_hex.outputs.version }} (weact_F411)"
           artifacts: ${{ steps.find_hex.outputs.hex_file }}
           allowUpdates: true
           draft: false
