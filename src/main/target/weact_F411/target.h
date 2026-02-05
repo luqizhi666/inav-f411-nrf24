@@ -25,7 +25,7 @@
 #define NRF24_SPI_BUS           BUS_SPI1
 #define NRF24_CS_PIN            PA0        
 #define NRF24_CE_PIN            PA1        
-#define DEFAULT_RX_TYPE         RX_TYPE_SPI
+// #define DEFAULT_RX_TYPE         RX_TYPE_SPI
 
 //**********/
 
