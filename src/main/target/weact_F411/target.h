@@ -25,6 +25,8 @@
 #define NRF24_SPI_BUS           BUS_SPI1
 #define NRF24_CS_PIN            PA0        
 #define NRF24_CE_PIN            PA1        
+#define DEFAULT_RX_TYPE         RX_TYPE_SPI
+
 //**********/
 
 
@@ -113,7 +115,6 @@
 // #endif
 
 #define USE_RX_PPM
-#define DEFAULT_RX_TYPE         RX_TYPE_PPM
 #define SERIALRX_PROVIDER       SERIALRX_SBUS
 #define SERIALRX_UART           SERIAL_PORT_USART2
 
