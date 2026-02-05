@@ -111,6 +111,13 @@
 
 #define DEFAULT_I2C_BUS         BUS_I2C1
 
+#define USE_IMU_MPU6050         // ← 注意是 MPU6050，不是 MPU6000
+#define IMU_MPU6050_ALIGN       CW180_DEG
+// 不需要 CS_PIN！I2C 用地址通信
+
+
+
+
 #define USE_BARO
 #define BARO_I2C_BUS            BUS_I2C1
 #define USE_BARO_BMP280
